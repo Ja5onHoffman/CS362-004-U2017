@@ -1,5 +1,6 @@
 #include "dominion.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 
 int compare(const int* a, const int* b);
@@ -17,7 +18,7 @@ int main () {
   if (G.deckCount[0] > 0) {
     assert (ret != -1);
     
-    qsort ((void*)(G.deck[0]), G.deckCount[0], sizeof(int), compare);
+    qsort((void*)(G.deck[0]), G.deckCount[0], sizeof(int), compare);
     qsort ((void*)(G2.deck[0]), G2.deckCount[0], sizeof(int), compare);    
   } else
     assert (ret == -1);

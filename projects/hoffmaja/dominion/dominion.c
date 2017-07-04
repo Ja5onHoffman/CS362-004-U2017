@@ -5,6 +5,10 @@
 #include <math.h>
 #include <stdlib.h>
 
+
+// Temporary: Assignment 2 function definitions
+void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphand, int *cardDrawn, struct gameState *state);
+
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
     return 1;
@@ -271,7 +275,7 @@ int playCard(int handPos, int choice1, int choice2, int choice3, struct gameStat
 
 int buyCard(int supplyPos, struct gameState *state) {
   int who;
-  if (DEBUG){
+  if (DE_BUG){
     printf("Entering buyCard...\n");
   }
 
@@ -280,15 +284,15 @@ int buyCard(int supplyPos, struct gameState *state) {
   who = state->whoseTurn;
 
   if (state->numBuys < 1){
-    if (DEBUG)
+    if (DE_BUG)
       printf("You do not have any buys left\n");
     return -1;
   } else if (supplyCount(supplyPos, state) <1){
-    if (DEBUG)
+    if (DE_BUG)
       printf("There are not any of that type of card left\n");
     return -1;
   } else if (state->coins < getCost(supplyPos)){
-    if (DEBUG) 
+    if (DE_BUG) 
       printf("You do not have enough money to buy that. You have %d coins.\n", state->coins);
     return -1;
   } else {
@@ -298,7 +302,7 @@ int buyCard(int supplyPos, struct gameState *state) {
   
     state->coins = (state->coins) - (getCost(supplyPos));
     state->numBuys--;
-    if (DEBUG)
+    if (DE_BUG)
       printf("You bought card number %d for %d coins. You now have %d buys and %d coins.\n", supplyPos, getCost(supplyPos), state->numBuys, state->coins);
   }
 
@@ -541,7 +545,7 @@ int drawCard(int player, struct gameState *state)
     //Shufffle the deck
     shuffle(player, state);//Shuffle the deck up and make it so that we can draw
    
-    if (DEBUG){//Debug statements
+    if (DE_BUG){//DE_BUG statements
       printf("Deck count now: %d\n", state->deckCount[player]);
     }
     
@@ -550,7 +554,7 @@ int drawCard(int player, struct gameState *state)
     //Step 2 Draw Card
     count = state->handCount[player];//Get current player's hand count
     
-    if (DEBUG){//Debug statements
+    if (DE_BUG){//DE_BUG statements
       printf("Current hand count: %d\n", count);
     }
     
@@ -567,7 +571,7 @@ int drawCard(int player, struct gameState *state)
   else{
     int count = state->handCount[player];//Get current hand count for player
     int deckCounter;
-    if (DEBUG){//Debug statements
+    if (DE_BUG){//DE_BUG statements
       printf("Current hand count: %d\n", count);
     }
 
@@ -667,6 +671,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
+//        playAdventurer(&z, &drawntreasure, &currentPlayer, temphand, &cardDrawn, state);
+
       while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
@@ -725,30 +731,30 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       x = 1;//Condition to loop on
       while( x == 1) {//Buy one card
 	if (supplyCount(choice1, state) <= 0){
-	  if (DEBUG)
+	  if (DE_BUG)
 	    printf("None of that card left, sorry!\n");
 
-	  if (DEBUG){
+	  if (DE_BUG){
 	    printf("Cards Left: %d\n", supplyCount(choice1, state));
 	  }
 	}
 	else if (state->coins < getCost(choice1)){
 	  printf("That card is too expensive!\n");
 
-	  if (DEBUG){
+	  if (DE_BUG){
 	    printf("Coins: %d < %d\n", state->coins, getCost(choice1));
 	  }
 	}
 	else{
 
-	  if (DEBUG){
+	  if (DE_BUG){
 	    printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
 	  }
 
 	  gainCard(choice1, state, 0, currentPlayer);//Gain the card
 	  x = 0;//No more buying cards
 
-	  if (DEBUG){
+	  if (DE_BUG){
 	    printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
 	  }
 
@@ -868,7 +874,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	    card_not_discarded = 0;//Exit the loop
 	  }
 	  else if (p > state->handCount[currentPlayer]){
-	    if(DEBUG) {
+	    if(DE_BUG) {
 	      printf("No estate cards in your hand, invalid choice\n");
 	      printf("Must gain an estate if there are any\n");
 	    }
@@ -998,7 +1004,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	}
 	else{
 	  //No Card to Reveal
-	  if (DEBUG){
+	  if (DE_BUG){
 	    printf("No cards to reveal\n");
 	  }
 	}
@@ -1070,7 +1076,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	  return -1;				
 	}
 
-      if (DEBUG) 
+      if (DE_BUG) 
 	printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][choice1]);
 
       //increase supply count for choosen card by amount being discarded
@@ -1121,7 +1127,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		    {
 		      for (k = 0; k < state->handCount[i]; k++)
 			{
-			  if (DEBUG)
+			  if (DE_BUG)
 			    printf("Player %d reveals card number %d\n", i, state->hand[i][k]);
 			}	
 		      break;
@@ -1328,6 +1334,29 @@ int updateCoins(int player, struct gameState *state, int bonus)
   return 0;
 }
 
+// Assignment 2 function definitions
+void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphand, int *cardDrawn, struct gameState *state) {
+    while(*drawntreasure < 2) {
+        if (state->deckCount[*currentPlayer] < 1 ) {
+            shuffle(*currentPlayer, state);
+        }
+        
+        drawCard(*currentPlayer, state);
+        *cardDrawn = state->hand[*currentPlayer][state->handCount[*currentPlayer] - 1];
+        if (*cardDrawn == copper || *cardDrawn == silver || *cardDrawn == gold) {
+            drawntreasure++;
+        } else {
+            temphand[*z] = *cardDrawn;
+            state->handCount[*currentPlayer]--;
+            *z++;
+        }
+    }
+    
+    while(*z - 1 >= 0){
+        state->discard[*currentPlayer][state->discardCount[*currentPlayer]++] = temphand[*z-1];
+        *z = *z - 1;
+    }
+}
 
 //end of dominion.c
 
