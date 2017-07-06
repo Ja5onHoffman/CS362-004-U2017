@@ -11,6 +11,7 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
 void playSmithy(int *currentPlayer, int *handPos, struct gameState *state);
 void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameState *state);
 void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, struct gameState *state);
+
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
     return 1;
@@ -922,7 +923,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case minion:
-    playMinion(&currentPlayer, &handPos, &choice1, &choice2, state);
+    playMinions(&currentPlayer, &handPos, &choice1, &choice2, state);
   //     //+1 action
   //     state->numActions++;
   //
@@ -1342,24 +1343,29 @@ int updateCoins(int player, struct gameState *state, int bonus)
 }
 
 // Assignment 2 function definitions
+
 void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphand, int *cardDrawn, struct gameState *state) {
     while(*drawntreasure < 2) {
+      // If deck is empty, shuffle discard and add to deck
         if (state->deckCount[*currentPlayer] < 1 ) {
             shuffle(*currentPlayer, state);
         }
 
         drawCard(*currentPlayer, state);
+        // Top card of hadn is most recently drawn card
         *cardDrawn = state->hand[*currentPlayer][state->handCount[*currentPlayer] - 1];
         if (*cardDrawn == copper || *cardDrawn == silver || *cardDrawn == gold) {
             drawntreasure++;
         } else {
             temphand[*z] = *cardDrawn;
+            // This should just remove the top card
             state->handCount[*currentPlayer]--;
             *z++;
         }
     }
 
     while(*z - 1 >= 0){
+      // Discard all cards in play that have been drawn
         state->discard[*currentPlayer][state->discardCount[*currentPlayer]++] = temphand[*z-1];
         *z = *z - 1;
     }
@@ -1368,46 +1374,59 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
 
 void playSmithy(int *currentPlayer, int *handPos, struct gameState *state) {
   int i;
+  // +3 cards
   for (i = 0; i < 3; i++) {
     drawCard(*currentPlayer, state);
   }
 
+  // Discard card from hand
   discardCard(*handPos, *currentPlayer, state, 0);
 }
 
 void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameState *state) {
+  // +1 buy
   state->numBuys++;
   if (*choice1) {
+    // Gain coins equal to trashed card
     state->coins = state->coins + getCost(handCard(*choice1, state));
+
+    // Trash card
     discardCard(*choice1, *currentPlayer, state, 1);
   }
 
+  // Discard card
   discardCard(*handPos, *currentPlayer, state, 0);
 }
 
 void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, struct gameState *state) {
   int i, j;
+  // +1 action
   state->numActions++;
+
+  // Discard card from hand
   discardCard(*handPos, *currentPlayer, state, 0);
+  // +2 coins
   if (*choice1)	{
     state->coins = state->coins + 2;
   }
-
+  // Discard hand, rewdraw 4, other players with 5+ cards discard hand and draw 4
   else if (*choice2)	{
     while(numHandCards(state) > 0) {
     discardCard(*handPos, *currentPlayer, state, 0);
   }
-
+  // Draw 4
   for (i = 0; i < 4; i++) {
     drawCard(*currentPlayer, state);
   }
-
+  // Other players discard hand and redraw if hand size > 4
   for (i = 0; i < state->numPlayers; i++) {
     if (i != *currentPlayer) {
       if (state->handCount[i] > 4) {
+        // Discard hand
         while(state->handCount[i] > 0) {
           discardCard(*handPos, i, state, 0);
         }
+        // Draw 4
         for (j = 0; j < 4; j++) {
           drawCard(i, state);
         }
@@ -1415,6 +1434,26 @@ void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, st
       }
     }
   }
+}
+
+void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state) {
+  int i;
+  // +4 cards
+  for (i = 0; i < 4; i++) {
+    drawCard(*currentPlayer, state);
+  }
+
+  // +1 buy
+  state->numBuys++;
+  // Each additional player draws a card
+  for (i = 0; i < state->numPlayers; i++) {
+    if (i != *currentPlayer) {
+      drawcard(i, state);
+    }
+  }
+
+  // Put played card in played card pile
+  discardCard(*hadnPos, *currentPlayer, state, 0);
 }
 
 //end of dominion.c
