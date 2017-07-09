@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 
-// Temporary: Assignment 2 function definitions
+// Temporary: Assignment 2 function declarations
 void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphand, int *cardDrawn, struct gameState *state);
 void playSmithy(int *currentPlayer, int *handPos, struct gameState *state);
 void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameState *state);
@@ -878,7 +878,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     case minion:
 
-    playMinions(&currentPlayer, &handPos, &choice1, &choice2, state);
+    playMinion(&currentPlayer, &handPos, &choice1, &choice2, state);
     return 0;
 
     case steward:
@@ -1243,17 +1243,18 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
         if (state->deckCount[*currentPlayer] < 1 ) {
             shuffle(*currentPlayer, state);
         }
-
         drawCard(*currentPlayer, state);
-        // Top card of hadn is most recently drawn card
+        // Top card of hand is most recently drawn card
         *cardDrawn = state->hand[*currentPlayer][state->handCount[*currentPlayer] - 1];
         if (*cardDrawn == copper || *cardDrawn == silver || *cardDrawn == gold) {
             drawntreasure++;
         } else {
-            temphand[*z] = *cardDrawn;
+            // Bug: carddrawn not dereferenced
+            // Gives warning: incompatible pointer to integer conversion assigning to 'int' from 'int *'; dereference with *
+            temphand[*z] = cardDrawn;
             // This should just remove the top card
             state->handCount[*currentPlayer]--;
-            *z++;
+            *z+=1;
         }
     }
 
@@ -1268,10 +1269,11 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
 void playSmithy(int *currentPlayer, int *handPos, struct gameState *state) {
   int i;
   // +3 cards
-  for (i = 0; i < 3; i++) {
+  // for (i = 0; i < 3; i++) {
+  // Bug: Only +2 cards.
+  for (i = 0; i < 2; i++) {
     drawCard(*currentPlayer, state);
   }
-
   // Discard card from hand
   discardCard(*handPos, *currentPlayer, state, 0);
 }
@@ -1282,11 +1284,11 @@ void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameSta
   if (*choice1) {
     // Gain coins equal to trashed card
     state->coins = state->coins + getCost(handCard(*choice1, state));
-
     // Trash card
-    discardCard(*choice1, *currentPlayer, state, 1);
+    // discardCard(*choice1, *currentPlayer, state, 1);
+    // Bug: Trash flag set to 0, card will not be sent to played pile
+    discardCard(*choice1, *currentPlayer, state, 0);
   }
-
   // Discard card
   discardCard(*handPos, *currentPlayer, state, 0);
 }
@@ -1295,7 +1297,6 @@ void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, st
   int i, j;
   // +1 action
   state->numActions++;
-
   // Discard card from hand
   discardCard(*handPos, *currentPlayer, state, 0);
   // +2 coins
@@ -1313,7 +1314,9 @@ void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, st
   }
   // Other players discard hand and redraw if hand size > 4
   for (i = 0; i < state->numPlayers; i++) {
-    if (i != *currentPlayer) {
+    // if (i != *currentPlayer) {
+    // Bug: Discards current player's hand instead of others' 
+    if (i == *currentPlayer) {
       if (state->handCount[i] > 4) {
         // Discard hand
         while(state->handCount[i] > 0) {
@@ -1335,18 +1338,18 @@ void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state) 
   for (i = 0; i < 4; i++) {
     drawCard(*currentPlayer, state);
   }
-
   // +1 buy
   state->numBuys++;
   // Each additional player draws a card
   for (i = 0; i < state->numPlayers; i++) {
-    if (i != *currentPlayer) {
-      drawcard(i, state);
+    // if (i != *currentPlayer) {
+    // Bug: i will never be equal to current player
+    if (i != currentPlayer) {
+      drawCard(i, state);
     }
   }
-
   // Put played card in played card pile
-  discardCard(*hadnPos, *currentPlayer, state, 0);
+  discardCard(*handPos, *currentPlayer, state, 0);
 }
 
 //end of dominion.c
