@@ -279,7 +279,7 @@ int playCard(int handPos, int choice1, int choice2, int choice3, struct gameStat
 
 int buyCard(int supplyPos, struct gameState *state) {
   int who;
-  if (DE_BUG){
+  if (DEBUG){
     printf("Entering buyCard...\n");
   }
 
@@ -288,15 +288,15 @@ int buyCard(int supplyPos, struct gameState *state) {
   who = state->whoseTurn;
 
   if (state->numBuys < 1){
-    if (DE_BUG)
+    if (DEBUG)
       printf("You do not have any buys left\n");
     return -1;
   } else if (supplyCount(supplyPos, state) <1){
-    if (DE_BUG)
+    if (DEBUG)
       printf("There are not any of that type of card left\n");
     return -1;
   } else if (state->coins < getCost(supplyPos)){
-    if (DE_BUG)
+    if (DEBUG)
       printf("You do not have enough money to buy that. You have %d coins.\n", state->coins);
     return -1;
   } else {
@@ -306,7 +306,7 @@ int buyCard(int supplyPos, struct gameState *state) {
 
     state->coins = (state->coins) - (getCost(supplyPos));
     state->numBuys--;
-    if (DE_BUG)
+    if (DEBUG)
       printf("You bought card number %d for %d coins. You now have %d buys and %d coins.\n", supplyPos, getCost(supplyPos), state->numBuys, state->coins);
   }
 
@@ -549,7 +549,7 @@ int drawCard(int player, struct gameState *state)
     //Shufffle the deck
     shuffle(player, state);//Shuffle the deck up and make it so that we can draw
 
-    if (DE_BUG){//DE_BUG statements
+    if (DEBUG){//DEBUG statements
       printf("Deck count now: %d\n", state->deckCount[player]);
     }
 
@@ -558,7 +558,7 @@ int drawCard(int player, struct gameState *state)
     //Step 2 Draw Card
     count = state->handCount[player];//Get current player's hand count
 
-    if (DE_BUG){//DE_BUG statements
+    if (DEBUG){//DEBUG statements
       printf("Current hand count: %d\n", count);
     }
 
@@ -575,7 +575,7 @@ int drawCard(int player, struct gameState *state)
   else{
     int count = state->handCount[player];//Get current hand count for player
     int deckCounter;
-    if (DE_BUG){//DE_BUG statements
+    if (DEBUG){//DEBUG statements
       printf("Current hand count: %d\n", count);
     }
 
@@ -696,30 +696,30 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       x = 1;//Condition to loop on
       while( x == 1) {//Buy one card
 	if (supplyCount(choice1, state) <= 0){
-	  if (DE_BUG)
+	  if (DEBUG)
 	    printf("None of that card left, sorry!\n");
 
-	  if (DE_BUG){
+	  if (DEBUG){
 	    printf("Cards Left: %d\n", supplyCount(choice1, state));
 	  }
 	}
 	else if (state->coins < getCost(choice1)){
 	  printf("That card is too expensive!\n");
 
-	  if (DE_BUG){
+	  if (DEBUG){
 	    printf("Coins: %d < %d\n", state->coins, getCost(choice1));
 	  }
 	}
 	else{
 
-	  if (DE_BUG){
+	  if (DEBUG){
 	    printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
 	  }
 
 	  gainCard(choice1, state, 0, currentPlayer);//Gain the card
 	  x = 0;//No more buying cards
 
-	  if (DE_BUG){
+	  if (DEBUG){
 	    printf("Deck Count: %d\n", state->handCount[currentPlayer] + state->deckCount[currentPlayer] + state->discardCount[currentPlayer]);
 	  }
 
@@ -832,7 +832,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	    card_not_discarded = 0;//Exit the loop
 	  }
 	  else if (p > state->handCount[currentPlayer]){
-	    if(DE_BUG) {
+	    if(DEBUG) {
 	      printf("No estate cards in your hand, invalid choice\n");
 	      printf("Must gain an estate if there are any\n");
 	    }
@@ -916,7 +916,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	}
 	else{
 	  //No Card to Reveal
-	  if (DE_BUG){
+	  if (DEBUG){
 	    printf("No cards to reveal\n");
 	  }
 	}
@@ -988,7 +988,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	  return -1;
 	}
 
-      if (DE_BUG)
+      if (DEBUG)
 	printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][choice1]);
 
       //increase supply count for choosen card by amount being discarded
@@ -1039,7 +1039,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 		    {
 		      for (k = 0; k < state->handCount[i]; k++)
 			{
-			  if (DE_BUG)
+			  if (DEBUG)
 			    printf("Player %d reveals card number %d\n", i, state->hand[i][k]);
 			}
 		      break;
@@ -1315,7 +1315,7 @@ void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, st
   // Other players discard hand and redraw if hand size > 4
   for (i = 0; i < state->numPlayers; i++) {
     // if (i != *currentPlayer) {
-    // Bug: Discards current player's hand instead of others' 
+    // Bug: Discards current player's hand instead of others'
     if (i == *currentPlayer) {
       if (state->handCount[i] > 4) {
         // Discard hand
