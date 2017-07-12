@@ -122,7 +122,5 @@ int main() {
   printf("\n\n\n");
   printf("Total failed tests: %d\n\n", errs);
 
-
-
   return 0;
 }
