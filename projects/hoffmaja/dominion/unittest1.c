@@ -38,4 +38,5 @@ int main() {
   }
 
   printf("\nUNIT TEST 1: %d failed tests.\n", abs(fail-1));
+  return 0;
 }
