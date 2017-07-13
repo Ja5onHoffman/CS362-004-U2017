@@ -33,8 +33,13 @@ runtests: testDrawCard
 unittest1: unittest1.c dominion.o rngs.o
 		gcc -o assignmentthree -g unittest1.c dominion.o rngs.o $(CFLAGS)
 
+# remove -g flag
 unittest2: unittest2.c dominion.o rngs.o interface.o
 	gcc -g -o unittest2 unittest2.c dominion.o rngs.o interface.o $(CFLAGS)
+
+# remove -g flag
+unittest3: unittest3.c dominion.o rngs.o interface.o
+		gcc -g -o unittest3 unittest3.c dominion.o interface.o $(CFLAGS)
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
