@@ -1,5 +1,5 @@
 /* 	Interactive Dominion Interface
-	
+
 	Sam Heinith CS362
 	1/26/2010
 */
@@ -85,14 +85,14 @@
 #define ONETHOUSAND 1000
 
 
-int addCardToHand(int player, int card, struct gameState *game); 
+int addCardToHand(int player, int card, struct gameState *game);
 
 int countHandCoins(int player, struct gameState *game);
 
 
 void executeBotTurn(int player, int *turnNum, struct gameState *game);
 
-void phaseNumToName(int phase, char *name); 
+void phaseNumToName(int phase, char *name);
 void cardNumToName(int card, char *name);
 
 int getCardCost(int card);
@@ -111,6 +111,7 @@ void printState(struct gameState *game);
 
 void printSupply(struct gameState *game);
 
+// Declared but doesn't exist
 void printGameState(struct gameState *game);
 
 void printScores(struct gameState *game);
@@ -120,9 +121,3 @@ void selectKingdomCards(int randomSeed, int kingdomCards[NUM_K_CARDS]);
 
 
 #endif
-
-
-
-
-
-

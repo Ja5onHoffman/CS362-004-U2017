@@ -120,7 +120,7 @@ int main() {
   assert(err == -1);
 
   printf("\n\n\n");
-  printf("Total failed tests: %d\n\n", errs);
+  printf("UNIT TEST 2 - Total failed tests: %d\n\n", errs);
 
   return 0;
 }
