@@ -128,4 +128,12 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
 
+
+// Temporary: Assignment 2 function declarations
+void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphand, int *cardDrawn, struct gameState *state);
+void playSmithy(int *currentPlayer, int *handPos, struct gameState *state);
+void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameState *state);
+void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, struct gameState *state);
+void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state);
+
 #endif

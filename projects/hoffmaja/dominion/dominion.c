@@ -6,13 +6,6 @@
 #include <stdlib.h>
 
 
-// Temporary: Assignment 2 function declarations
-void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphand, int *cardDrawn, struct gameState *state);
-void playSmithy(int *currentPlayer, int *handPos, struct gameState *state);
-void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameState *state);
-void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, struct gameState *state);
-void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state);
-
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
     return 1;
@@ -1269,7 +1262,7 @@ void playSmithy(int *currentPlayer, int *handPos, struct gameState *state) {
   // +3 cards
   // for (i = 0; i < 3; i++) {
   // Bug: Only +2 cards.
-  for (i = 0; i < 2; i++) {
+  for (i = 0; i < 3; i++) {
     drawCard(*currentPlayer, state);
   }
   // Discard card from hand
