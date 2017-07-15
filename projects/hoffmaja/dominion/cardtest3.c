@@ -9,3 +9,66 @@
 int errs = 0;
 #undef assert
 #define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+
+void replaceCopperWith(int card, int p, struct gameState *state);
+
+int main() {
+  struct gameState state;
+  struct gameState oldState;
+  int numPlayers = 2;
+  int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
+    sea_hag, tribute, smithy, council_room};
+  int seed = 9;
+  int handPos = -1;
+  int currentPlayer = 0;
+
+  // Additional variables from cardEffect
+  int temphand[MAX_HAND];// moved above the if statement
+  memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
+  int drawntreasure=0;
+  int cardDrawn;
+  int z = 0;
+  printf("\n----- CARD TEST TWO -----\n\n");
+
+  // Initialize game
+  initializeGame(numPlayers, k, seed, &state);
+
+
+  printf("Adding Salvager to Player 1 hand...\n");
+  replaceCopperWith(salvager, 0, &state);
+  printf("Adding Adventurer to be discarded...\n");
+  replaceCopperWith(adventurer, 0, &state);
+  printHand(0, &state);
+  printf("Playing Salvager...\n");
+  int salvagerPos = getHandPos(0, salvager, &state);
+  int adventurerPos = getHandPos(0, adventurer, &state);
+
+  int buysBefore = state.numBuys;
+  int coinsBefore = state.coins;
+  playSalvager(&currentPlayer, &salvagerPos, &adventurerPos, &state);
+  printf("Verifying buys increase by 1...\n");
+  printf("Buys before playing Salvager: %d\n", buysBefore);
+  printf("Buys after playing Salvager: %d\n", state.numBuys);
+  assert(state.numBuys > buysBefore);
+
+  printf("\nVerifying coins increase by amount equal to trashed card...\n");
+  printf("(Increase should be 6 for discarding Adventurer)\n");
+  printf("Coins before playing Salvager: %d\n", coinsBefore);
+  printf("Coins after playing Salvager: %d\n", state.coins);
+  assert(state.coins == coinsBefore + 6);
+
+  printf("\nVerifying ")
+  // assert card sent to played pile
+
+
+}
+
+// Modfies hand by replacing Copper with designated card
+void replaceCopperWith(int card, int p, struct gameState *state) {
+  for (int i = 0; i < state->handCount[p]; i++) {
+    if (state->hand[p][i] == copper) {
+      state->hand[p][i] = card;
+      break;
+    }
+  }
+}

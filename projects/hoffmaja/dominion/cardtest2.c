@@ -59,6 +59,9 @@ int main() {
   verifyDiscard(&temphand, 0, &z, &state);
 
 
+  printf("\n\n\n");
+  printf("CARD TEST 1 - Total failed tests: %dn\n", errs);
+
   return 0;
 }
 
@@ -87,6 +90,7 @@ void verifyTopThree(int p, struct gameState *state) {
 
   if (flag) {
     printf("FAILED TEST: Card other than trasure drawn.\n");
+    errs++;
     printHand(0, state);
   } else {
     printf("PASSED TEST: All treasure cards drawn.\n");
