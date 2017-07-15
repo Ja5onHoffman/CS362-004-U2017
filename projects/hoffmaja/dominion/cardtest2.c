@@ -13,6 +13,7 @@ int errs = 0;
 
 void replaceCopperWith(int card, int p, struct gameState *state);
 void verifyTopThree(int p, struct gameState *state);
+void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state);
 
 int main() {
   struct gameState state;
@@ -26,9 +27,10 @@ int main() {
 
   // Additional variables from cardEffect
   int temphand[MAX_HAND];// moved above the if statement
+  memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
   int drawntreasure=0;
   int cardDrawn;
-  int z;
+  int z = 0;
   printf("\n----- CARD TEST TWO -----\n\n");
 
   // Initialize game
@@ -44,11 +46,17 @@ int main() {
   printHand(0, &state);
   printDeck(0, &state);
   printDiscard(0, &state);
-  printf("Add drawn cards should be treasure cards. Testing...\n");
+  printf("All drawn cards should be treasure cards. Testing...\n");
   verifyTopThree(0, &state);
 
+  for (int i = 0; i < MAX_HAND; i++) {
+    if (temphand[i] != '\0') {
+      z++;
+    }
+  }
 
-  // assert temphand cards are in discard
+  printf("All non-treasure discarded cards should be in in Discard pile. Testing...");
+  verifyDiscard(&temphand, 0, &z, &state);
 
 
 
@@ -83,5 +91,14 @@ void verifyTopThree(int p, struct gameState *state) {
   } else {
     printf("PASSED TEST: All treasure cards drawn.\n");
     printHand(0, state);
+  }
+}
+
+void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state) {
+  printf("Testing %d discarded cards.\n", state->discardCount[p]);
+  printDiscard(0, state);
+  for (int i = 0; i < *z; i++) {
+    printf("\nCard %d\n", i);
+    assert(state->discard[p][i] == tempHand[i]);
   }
 }
