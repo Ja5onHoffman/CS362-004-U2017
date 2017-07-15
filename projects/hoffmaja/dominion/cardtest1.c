@@ -6,21 +6,11 @@
 #include "interface.h"
 #include "rngs.h"
 
-// Card test for smithy
-// 1. Current player should receive exact 3 cards.
-//
-// 2. 3 cards should come from his own pile.
-//
-// 3. No state change should occur for other players.
-//
-// 4. No state change should occur to the victory card piles and kingdom card piles.
-
 int errs = 0;
 #undef assert
 #define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
 
 void replaceCopperWith(int card, int p, struct gameState *state);
-int getHandPos(int p, int card, struct gameState *state);
 
 int main() {
   struct gameState state;
@@ -36,7 +26,7 @@ int main() {
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);
 
-  printf("Adding Smithy to player 1 hand...\n");
+  printf("Adding Smithy to Player 1 hand...\n");
   replaceCopperWith(smithy, 0, &state);
   printHand(0, &state);
   handPos = getHandPos(0, smithy, &state);
@@ -94,14 +84,4 @@ void replaceCopperWith(int card, int p, struct gameState *state) {
       break;
     }
   }
-}
-
-int getHandPos(int p, int card, struct gameState *state) {
-  for (int i = 0; i <= state->handCount[p]; i++) {
-    if (state->hand[p][i] == card) {
-      return i;
-    }
-  }
-
-  return -1;
 }

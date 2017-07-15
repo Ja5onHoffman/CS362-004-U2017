@@ -1242,7 +1242,7 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
         } else {
             // Bug: carddrawn not dereferenced
             // Gives warning: incompatible pointer to integer conversion assigning to 'int' from 'int *'; dereference with *
-            temphand[*z] = cardDrawn;
+            temphand[*z] = *cardDrawn;
             // This should just remove the top card
             state->handCount[*currentPlayer]--;
             *z+=1;
@@ -1254,6 +1254,9 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
         state->discard[*currentPlayer][state->discardCount[*currentPlayer]++] = temphand[*z-1];
         *z = *z - 1;
     }
+
+    // Fixes bug for purposes of testing
+    discardCard(getHandPos(*currentPlayer, adventurer, state), *currentPlayer, state, 0);
 }
 
 
@@ -1341,6 +1344,18 @@ void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state) 
   }
   // Put played card in played card pile
   discardCard(*handPos, *currentPlayer, state, 0);
+}
+
+// Utility function to get hand position.
+// Needed to eventually fix a bug.
+int getHandPos(int p, int card, struct gameState *state) {
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == card) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 //end of dominion.c

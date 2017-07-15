@@ -136,4 +136,7 @@ void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameSta
 void playMinion(int *currentPlayer, int *handPos, int *choice1, int *choice2, struct gameState *state);
 void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state);
 
+// Utility
+int getHandPos(int p, int card, struct gameState *state);
+
 #endif
