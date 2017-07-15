@@ -6,7 +6,6 @@
 #include "interface.h"
 #include "rngs.h"
 
-
 int errs = 0;
 #undef assert
 #define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
@@ -55,12 +54,12 @@ int main() {
     }
   }
 
-  printf("All non-treasure discarded cards should be in in Discard pile. Testing...");
+  printf("All non-treasure discarded cards should \n \
+  be in in Discard pile. Testing...");
   verifyDiscard(&temphand, 0, &z, &state);
 
 
-
-
+  return 0;
 }
 
 // Modfies hand by replacing Copper with designated card
@@ -73,6 +72,7 @@ void replaceCopperWith(int card, int p, struct gameState *state) {
   }
 }
 
+// Verifies the cards drawn by Adventurer are all treasure careds
 void verifyTopThree(int p, struct gameState *state) {
   int cards[3] = { 0 }; // init to 0s
   int c = 0, flag = 0; // index for cards
