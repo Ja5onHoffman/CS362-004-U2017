@@ -29,7 +29,7 @@ int main() {
   int drawntreasure=0;
   int cardDrawn;
   int z = 0;
-  printf("\n----- CARD TEST TWO -----\n\n");
+  printf("\n----- CARD TEST THREE -----\n\n");
 
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);
