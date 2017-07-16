@@ -60,7 +60,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("CARD TEST 1 - Total failed tests: %dn\n", errs);
+  printf("CARD TEST 2 - Total failed tests: %dn\n", errs);
 
   return 0;
 }
