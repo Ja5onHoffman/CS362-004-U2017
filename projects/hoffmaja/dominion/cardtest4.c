@@ -28,7 +28,7 @@ int main() {
   int temphand[MAX_HAND];// moved above the if statement
   memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
 
-  printf("\n----- CARD TEST FOUR -----\n\n");
+  printf("\n----- CARD TEST FOUR: Council Room Card -----\n\n");
 
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);
@@ -69,7 +69,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("CARD TEST 4 - Total failed tests: %dn\n", errs);
+  printf("CARD TEST 4 - Total failed tests: %d\n", errs);
 
   return 0;
 }

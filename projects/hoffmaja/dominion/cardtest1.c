@@ -21,7 +21,7 @@ int main() {
   int seed = 9;
   int handPos = -1;
   int currentPlayer = 0;
-  printf("\n----- CARD TEST ONE -----\n\n");
+  printf("\n----- CARD TEST ONE: Smithy Card -----\n\n");
 
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);
@@ -40,8 +40,7 @@ int main() {
   int hp = getHandPos(0, smithy, &state);
   playSmithy(&currentPlayer, &hp, &state);
   printf("Drawing three cards...\n");
-  printf("Player 1's hand count should now be %d (old count \
-    minus Smithy plus three).\n", oldCount + 2);
+  printf("Player 1's hand count should now be %d (old count minus Smithy plus three).\n", oldCount + 2);
   printf("Hand count: %d\n", state.handCount[0]);
   assert(state.handCount[0] == oldCount + 2);
 
@@ -56,9 +55,6 @@ int main() {
   assert(state.deckCount[1] == oldState.deckCount[1]);
   printf("Checking Player 2 discard...\n");
   assert(!memcmp(&state.discard[1], &oldState.discard[1], state.discardCount[1] * sizeof(int)));
-
-  printf("Kingdom and Victory piles should be unchanged.\n");
-  printf("Checking Kingdom pile.\n");
 
 
   printf("\n\n\n");

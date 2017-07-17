@@ -24,7 +24,8 @@ int main() {
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
   int count = 0, supp = 0;
-  printf("\n----- UNIT TEST TWO -----\n\n");
+  printf("\n----- UNIT TEST TWO: gainCard() Function -----\n\n");
+
 
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);

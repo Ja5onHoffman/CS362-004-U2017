@@ -8,10 +8,6 @@
 
 /*********
 Unit test for whoseTurn function.
-
-Cycle through various numbers of players and verfiy
-whoseTurn updates state player count correctly
-
 *********/
 
 int fail = 1;
@@ -26,7 +22,7 @@ int main() {
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
 
-  printf("----- UNIT TEST ONE -----\n");
+  printf("----- UNIT TEST ONE: whoseTurn() Function -----\n");
   int i;
   for (i = 0; i < 5; i++) {
     // Initialize game
