@@ -1336,9 +1336,9 @@ void playCouncilRoom(int *currentPlayer, int *handPos, struct gameState *state) 
   state->numBuys++;
   // Each additional player draws a card
   for (i = 0; i < state->numPlayers; i++) {
-    // if (i != *currentPlayer) {
+    if (i != *currentPlayer) {
     // Bug: i will never be equal to current player
-    if (i != currentPlayer) {
+    // if (i != currentPlayer) {
       drawCard(i, state);
     }
   }
