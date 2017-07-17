@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include "dominion.h"
+#include "dominion_helpers.h"
 #include "interface.h"
 #include "rngs.h"
 
@@ -17,20 +18,15 @@ void addFiveToDeck(int p, struct gameState *state);
 
 int main() {
   struct gameState state;
-  struct gameState oldState;
   int numPlayers = 2;
   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
-  int handPos = -1;
   int currentPlayer = 0;
 
   // Additional variables from cardEffect
   int temphand[MAX_HAND];// moved above the if statement
   memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
-  int drawntreasure=0;
-  int cardDrawn;
-  int z = 0;
 
   printf("\n----- CARD TEST FOUR -----\n\n");
 
@@ -39,20 +35,19 @@ int main() {
 
   printf("Discarding four cards to make room for P1 draws...\n");
   for (int i = 0; i < 4; i++) {
-    discardCard(i, 0, &state);
+    discardCard(i, 0, &state, 1);
   }
 
-  printHand(1, &state);
+
   printf("Adding Council Room to hand...\n");
   replaceCopperWith(council_room, 0, &state);
-
+  printHand(0, &state);
   int cp = getHandPos(0, council_room, &state);
   int oldCount = state.handCount[0];
   int oldBuys = state.numBuys;
 
 
   int oldCount2 = state.handCount[1];
-  printHand(1, &state);
 
   printf("Playing Council Room...\n");
   playCouncilRoom(&currentPlayer, &cp, &state);
@@ -76,7 +71,6 @@ int main() {
   printf("\n\n\n");
   printf("CARD TEST 4 - Total failed tests: %dn\n", errs);
 
-  printPlayed(0, &state);
   return 0;
 }
 

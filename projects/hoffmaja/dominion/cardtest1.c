@@ -33,9 +33,7 @@ int main() {
 
   printf("Recording game state...\n");
   memcpy(&oldState, &state, sizeof(struct gameState));
-  // printHand(0, &state);
-  // printDeck(0, &state);
-  // printDiscard(0, &state);
+
   int oldCount = state.handCount[0];
   printf("Player 1's hand count is now %d\n", oldCount);
   printf("Playing Smithy...\n");
@@ -48,30 +46,23 @@ int main() {
   assert(state.handCount[0] == oldCount + 2);
 
   printf("Player 2 state should be unchanged.\n");
-  // assert(memcmp(&state.hand[1][MAX_HAND], &oldState.hand[1][MAX_HAND], sizeof(state.hand[1][MAX_HAND])));
-  // assert(memcmp(&state.handCount[1], &oldState.hand[1][MAX_HAND], sizeof(state.handCount[1])));
-  // assert(memcmp(&state.deck[1][MAX_DECK], &oldState.deck[1][MAX_HAND], sizeof(state.deck[1][MAX_DECK])));
-  // assert(memcmp(&state.deckCount[1], &oldState.deckCount[1], sizeof(state.deckCount[1])));
-  // assert(memcmp(&state.discard[1][MAX_DECK], &oldState.discard[1][MAX_DECK], sizeof(state.discard[1][MAX_DECK])));
   printf("Checking Player 2 hand...\n");
-  assert(state.hand[1][MAX_HAND] == oldState.hand[1][MAX_HAND]);
+  assert(!memcmp(&state.hand[1], &oldState.hand[1], state.handCount[1] * sizeof(int)));
   printf("Checking Player 2 hand count...\n");
   assert(state.handCount[1] == oldState.handCount[1]);
   printf("Checking Player 2 deck...\n");
-  assert(state.deck[1][MAX_DECK] == oldState.deck[1][MAX_HAND]);
+  assert(!memcmp(&state.deck[1], &oldState.deck[1], state.deckCount[1] * sizeof(int)));
   printf("Checking Player 2 deck count...\n");
   assert(state.deckCount[1] == oldState.deckCount[1]);
   printf("Checking Player 2 discard...\n");
-  assert(state.discard[1][MAX_DECK] == oldState.discard[1][MAX_DECK]);
+  assert(!memcmp(&state.discard[1], &oldState.discard[1], state.discardCount[1] * sizeof(int)));
 
   printf("Kingdom and Victory piles should be unchanged.\n");
   printf("Checking Kingdom pile.\n");
 
 
   printf("\n\n\n");
-  printf("CARD TEST 1 - Total failed tests: %d of 6\n\n", errs);
-
-
+  printf("CARD TEST 1 - Total failed tests: %d\n", errs);
 
   return 0;
 }

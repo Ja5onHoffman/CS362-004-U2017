@@ -80,4 +80,4 @@ all: playdom player testDrawCard testBuyCard badTestDrawCard
 
 clean:
 	rm -rf *.o *.dSYM playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe \
-	unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 caredtest4 unittestresults.out
+	unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 unittestresults.out

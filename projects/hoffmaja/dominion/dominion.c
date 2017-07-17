@@ -1241,8 +1241,9 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
             drawntreasure++;
         } else {
             // Bug: carddrawn not dereferenced
+              // temphand[*z] = *cardDrawn;
             // Gives warning: incompatible pointer to integer conversion assigning to 'int' from 'int *'; dereference with *
-            temphand[*z] = *cardDrawn;
+            temphand[*z] = cardDrawn;
             // This should just remove the top card
             state->handCount[*currentPlayer]--;
             *z+=1;
@@ -1265,7 +1266,7 @@ void playSmithy(int *currentPlayer, int *handPos, struct gameState *state) {
   // +3 cards
   // for (i = 0; i < 3; i++) {
   // Bug: Only +2 cards.
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 2; i++) {
     drawCard(*currentPlayer, state);
   }
   // Discard card from hand

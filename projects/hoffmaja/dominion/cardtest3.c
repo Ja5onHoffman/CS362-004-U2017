@@ -15,20 +15,17 @@ void testPlayedCards(int card, struct gameState *state);
 
 int main() {
   struct gameState state;
-  struct gameState oldState;
   int numPlayers = 2;
   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
-  int handPos = -1;
   int currentPlayer = 0;
 
   // Additional variables from cardEffect
   int temphand[MAX_HAND];// moved above the if statement
   memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
-  int drawntreasure=0;
-  int cardDrawn;
-  int z = 0;
+
+
   printf("\n----- CARD TEST THREE -----\n\n");
 
   // Initialize game
@@ -71,7 +68,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("CARD TEST 3 - Total failed tests: %dn\n", errs);
+  printf("CARD TEST 3 - Total failed tests: %d\n", errs);
 
   return 0;
 }

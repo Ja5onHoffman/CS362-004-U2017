@@ -16,12 +16,10 @@ void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state);
 
 int main() {
   struct gameState state;
-  struct gameState oldState;
   int numPlayers = 2;
   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
-  int handPos = -1;
   int currentPlayer = 0;
 
   // Additional variables from cardEffect
@@ -54,13 +52,13 @@ int main() {
     }
   }
 
-  printf("All non-treasure discarded cards should \n \
-  be in in Discard pile. Testing...");
+  printf("All non-treasure discarded cards should \
+  be in in Discard pile. Testing...\n");
   verifyDiscard(&temphand, 0, &z, &state);
 
 
   printf("\n\n\n");
-  printf("CARD TEST 2 - Total failed tests: %dn\n", errs);
+  printf("CARD TEST 2 - Total failed tests: %d\n", errs);
 
   return 0;
 }

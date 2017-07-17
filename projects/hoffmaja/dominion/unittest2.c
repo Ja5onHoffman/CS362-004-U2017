@@ -10,7 +10,8 @@
 
 /*********
 Unit test for gainCard function.
-Add card to a players hand then check for card.
+
+
 *********/
 int errs = 0;
 #undef assert

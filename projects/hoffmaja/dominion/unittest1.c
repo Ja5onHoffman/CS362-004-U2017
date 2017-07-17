@@ -8,9 +8,10 @@
 
 /*********
 Unit test for whoseTurn function.
-Initialize a game, change the whoseTurn variable on the
-game state multiple times and verify that whoseTurn()
-returns the correct player.
+
+Cycle through various numbers of players and verfiy
+whoseTurn updates state player count correctly
+
 *********/
 
 int fail = 1;
@@ -28,6 +29,7 @@ int main() {
   printf("----- UNIT TEST ONE -----\n");
   int i;
   for (i = 0; i < 5; i++) {
+    // Initialize game
     initializeGame(numPlayers[i], k, seed, &state);
     printf("\nTesting with %d players.\n", numPlayers[i]);
     int currentPlayer = 0; printf("Current player = %d\n", currentPlayer);
