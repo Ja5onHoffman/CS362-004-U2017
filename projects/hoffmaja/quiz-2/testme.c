@@ -5,14 +5,48 @@
 
 char inputChar()
 {
-    // TODO: rewrite this function
-    return ' ';
+    // Only testing the caracters specified in testme()
+    char c;
+    int r = rand() % 10;
+    switch (r) {
+      case 1:
+        c = '[';
+        break;
+      case 2:
+        c = '(';
+        break;
+      case 3:
+       c = '{';
+       break;
+      case 4:
+        c = ' ';
+        break;
+      case 5:
+        c = 'a';
+        break;
+      case 6:
+        c = 'x';
+        break;
+      case 7:
+        c = '}';
+        break;
+      case 8:
+        c = ')';
+        break;
+      case 9:
+        c = ']';
+        break;
+    }
+    return c;
 }
 
 char *inputString()
 {
-    // TODO: rewrite this function
-    return "";
+    int r = rand() % 100001;
+    if (r == 5000) {
+      return "reset";
+    }
+    return "continue";
 }
 
 void testme()
@@ -31,7 +65,7 @@ void testme()
     if (c == '[' && state == 0) state = 1;
     if (c == '(' && state == 1) state = 2;
     if (c == '{' && state == 2) state = 3;
-    if (c == ' '&& state == 3) state = 4;
+    if (c == ' ' && state == 3) state = 4;
     if (c == 'a' && state == 4) state = 5;
     if (c == 'x' && state == 5) state = 6;
     if (c == '}' && state == 6) state = 7;
