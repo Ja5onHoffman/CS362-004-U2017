@@ -1241,9 +1241,9 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
             drawntreasure++;
         } else {
             // Bug: carddrawn not dereferenced
-              // temphand[*z] = *cardDrawn;
+            temphand[*z] = *cardDrawn;
             // Gives warning: incompatible pointer to integer conversion assigning to 'int' from 'int *'; dereference with *
-            temphand[*z] = cardDrawn;
+            // temphand[*z] = cardDrawn;
             // This should just remove the top card
             state->handCount[*currentPlayer]--;
             *z+=1;
