@@ -73,6 +73,9 @@ cardtest3: cardtest3.c dominion.o rngs.o interface.o
 cardtest4: cardtest4.c dominion.o rngs.o interface.o
 		gcc -g -o cardtest4 cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)
 
+randomtestadventurer: randomtestadventurer.c dominion_helpers.o dominion.o rngs.o interface.o $(CFLAGS)
+		gcc -g -o randomtestadventurer randomtestadventurer.c dominion_helper.o dominion.o rngs.o interface.o
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
@@ -80,4 +83,5 @@ all: playdom player testDrawCard testBuyCard badTestDrawCard
 
 clean:
 	rm -rf *.o *.dSYM playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe \
-	unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 unittestresults.out
+	unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 unittestresults.out \
+	randomtestadventurer
