@@ -37,7 +37,7 @@ int main() {
 
 
 void testAdventurer(int seed) {
-  SelectStream(seed+1);
+  SelectStream(seed+1); // In case see = 0;
   struct gameState staticState;
   int numPlayers = 0;
   int player = 0;
