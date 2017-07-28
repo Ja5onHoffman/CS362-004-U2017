@@ -16,9 +16,17 @@ shuffle(int arr[], int n);
 void testSalvager(int seed);
 
 int main() {
+  int numTests = 2000;
+  // Test Salvager in loop
+  SelectStream(0);
+  PlantSeeds(9999);
+  printf("\n----- RANDOM TEST: Adventurer Card -----\n\n");
+  for (int i = 0; i < numTests; i++) {
+    testSalvager(i);
+  }
 
 
-
+  printf("RANDOM TEST: Salvager - Total failed tests: %d out of %d\n", errs, numTests);
 
 }
 
@@ -35,7 +43,7 @@ void testSalvager(int seed) {
   int temphand[MAX_HAND];// moved above the if statement
   memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
 
-  printf("\n----- CARD TEST THREE: Salvager Card -----\n\n");
+  printf("\n----- RANDOM TEST: Salvager Card -----\n\n");
 
   // Fill k_cards
   for (int i = 7; i < 27; i++) {
@@ -67,8 +75,18 @@ void testSalvager(int seed) {
   int buysBefore = state.numBuys;
   int coinsBefore = state.coins;
   playSalvager(&player, &salvager, &randPos, &state);
-  
-  // Verify salvager stuff
+
+  // Num buys greater (consider buysBefore + 1)
+  assert(state.numBuys > buysBefore);
+  // Gain card value
+  assert(state.coins == coinsBefore + getCost(randCard));
+  // Salvager in played cards
+  assert(state.playedCards[0] == salvager);
+  // Played cards increase by 1
+  assert(state.playedCardCount == 1);
+  // Card no longer in hand
+  assert(state.hand[0][randPos] != randCard);
+
 
 }
 

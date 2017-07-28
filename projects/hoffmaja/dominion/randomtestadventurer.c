@@ -32,7 +32,7 @@ int main() {
     testAdventurer(i);
   }
 
-  printf("CARD TEST 2 - Total failed tests: %d out of %d\n", errs, numTests);
+  printf("RANDOM TEST: Adventurer - Total failed tests: %d out of %d\n", errs, numTests);
 }
 
 
@@ -41,7 +41,6 @@ void testAdventurer(int seed) {
   struct gameState staticState;
   int numPlayers = 0;
   int player = 0;
-  int currentPlayer = 0;
   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
     sea_hag, tribute, smithy, council_room};
 
