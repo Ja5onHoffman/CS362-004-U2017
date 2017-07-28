@@ -26,7 +26,7 @@ int main() {
   memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
 
 
-  printf("\n----- CARD TEST THREE: Salvager Card -----\n\n");
+  printf("\n----- CARD TEST 3: Salvager Card -----\n\n");
 
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);

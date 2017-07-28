@@ -87,6 +87,7 @@ public class UrlValidatorTest extends TestCase {
       assertTrue(urlVal.isValid("http://www.google.com"));
       assertTrue(urlVal.isValid("http://www.google.com/"));
       int statusPerLine = 60;
+      int counter = 0;
       int printed = 0;
       if (printIndex)  {
          statusPerLine = 6;
@@ -104,9 +105,11 @@ public class UrlValidatorTest extends TestCase {
          String url = testBuffer.toString();
          boolean result = urlVal.isValid(url);
          
-         if(result == true)
+         
+        if(result == true)
         	 System.out.println(url);
          assertEquals(url, expected, result);
+         counter++;
          
          if (printStatus) {
             if (printIndex) {
@@ -128,6 +131,8 @@ public class UrlValidatorTest extends TestCase {
       if (printStatus) {
          System.out.println();
       }
+      
+      System.out.println(counter);
    }
 
    public void testValidator202() {
