@@ -33,11 +33,13 @@ int main() {
   }
 
   printf("RANDOM TEST: Adventurer - Total failed tests: %d out of %d\n", errs, numTests);
+
+  return 0;
 }
 
 
 void testAdventurer(int seed) {
-  SelectStream(seed+1); // In case see = 0;
+  SelectStream(seed+1); // In case seed = 0;
   struct gameState staticState;
   int numPlayers = 0;
   int player = 0;

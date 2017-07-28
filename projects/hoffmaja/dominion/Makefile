@@ -62,25 +62,28 @@ unittest4: unittest4.c dominion.o rngs.o interface.o
 # Card Tests
 
 cardtest1: cardtest1.c dominion.o rngs.o interface.o
-		gcc -g -o cardtest1 cardtest1.c dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -g -o cardtest1 cardtest1.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest2: cardtest2.c dominion.o rngs.o interface.o
-		gcc -g -o cardtest2 cardtest2.c dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -g -o cardtest2 cardtest2.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest3: cardtest3.c dominion.o rngs.o interface.o
-		gcc -g -o cardtest3 cardtest3.c dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -g -o cardtest3 cardtest3.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest4: cardtest4.c dominion.o rngs.o interface.o
-		gcc -g -o cardtest4 cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -g -o cardtest4 cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)
 
-randomtestadventurer: randomtestadventurer.c dominion_helpers.o dominion.o rngs.o interface.o $(CFLAGS)
-		gcc -g -o randomtestadventurer randomtestadventurer.c dominion_helpers.o dominion.o rngs.o interface.o
+# Random tests
 
-randomtestcard1: randomtestcard1.c dominion_helpers.o dominion.o rngs.o interface.o $(CFLAGS)
-		gcc -g -o randomtestcard1 randomtestcard1.c dominion_helpers.o dominion.o rngs.o interface.o
+# randomtestadventurer: randomtestadventurer.c dominion.o rngs.o interface.o $(CFLAGS)
+# 	gcc -o randomtestadventurer randomtestadventurer.c dominion.o rngs.o interface.o -g
+
+randomtestcard1: randomtestcard1.c dominion.o rngs.o interface.o
+	gcc -g -o randomtestcard1 randomtestcard1.c dominion.o rngs.o interface.o $(CFLAGS)
+
 
 player: player.c interface.o
-	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
+		gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
 all: playdom player testDrawCard testBuyCard badTestDrawCard
 

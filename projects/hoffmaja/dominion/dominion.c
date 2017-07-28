@@ -1280,9 +1280,9 @@ void playSalvager(int *currentPlayer, int *handPos, int *choice1, struct gameSta
     // Gain coins equal to trashed card
     state->coins = state->coins + getCost(handCard(*choice1, state));
     // Trash card
-    // discardCard(*choice1, *currentPlayer, state, 1);
+    discardCard(*choice1, *currentPlayer, state, 1);
     // Bug: Trash flag set to 0, card will not be sent to played pile
-    discardCard(*choice1, *currentPlayer, state, 0);
+    // discardCard(*choice1, *currentPlayer, state, 0);
   }
   // Discard card
   discardCard(*handPos, *currentPlayer, state, 0);
