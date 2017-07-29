@@ -1264,9 +1264,9 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
 void playSmithy(int *currentPlayer, int *handPos, struct gameState *state) {
   int i;
   // +3 cards
-  // for (i = 0; i < 3; i++) {
+  for (i = 0; i < 3; i++) {
   // Bug: Only +2 cards.
-  for (i = 0; i < 2; i++) {
+  // for (i = 0; i < 2; i++) {
     drawCard(*currentPlayer, state);
   }
   // Discard card from hand
