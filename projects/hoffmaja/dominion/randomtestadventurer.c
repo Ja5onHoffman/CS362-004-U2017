@@ -14,25 +14,28 @@
 #define FAIL 0
 
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 void replaceCopperWith(int card, int p, struct gameState *state);
 void verifyTopThree(int p, struct gameState *state);
 void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state);
 void testAdventurer(int seed);
+void arrayShuffle(int arr[], int n);
 
 int main() {
-  int numTests = 2000;
-  // test adventurer in loop
+  int numTests = 100000;
   SelectStream(0);
   PlantSeeds(9999);
   printf("\n----- RANDOM TEST: Adventurer Card -----\n\n");
+  // Test adventurer in loop
   for (int i = 0; i < numTests; i++) {
+    printf("\n\nTest #%d\n", i);
     testAdventurer(i);
   }
 
-  printf("RANDOM TEST: Adventurer - Total failed tests: %d out of %d\n", errs, numTests);
+  printf("RANDOM TEST: Adventurer - Total failed asserts: %d out of %d\n", errs, tests);
 
   return 0;
 }
@@ -53,29 +56,29 @@ void testAdventurer(int seed) {
   int cardDrawn; // Empty int to hold card
   int z = 0; // Counter for temp hand
 
-  // Loop some type of test
-  // Set up random
-
-
   struct gameState state;
-  numPlayers = floor(Random() * 4) + 1; // Two to four players
-  printf("numPlayers: %d\n", numPlayers);
-  player = floor(Random() * numPlayers + 1); //Get random player
-  printf("player: %d\n", player);
+  numPlayers = floor(Random() * 3) + 2; // Two to four players
+  player = floor(Random() * numPlayers); //Get random player
 
-  initializeGame(numPlayers, k, 9, &state);
-
+  initializeGame(numPlayers, k, seed+1, &state);
+  memcpy(&staticState, &state, sizeof(struct gameState));
   // Add adventurer
-  replaceCopperWith(adventurer, player, &state);
+  addCardToHand(player, adventurer, &state);
 
   // Play adventurer with randomly generated player and state
   playAdventurer(&z, &drawntreasure, &player, temphand, &cardDrawn, &state);
-  // All drawn cards should be treasure cards
+  printf("Verifying player %d's drawn cards are treasure cards\n", player);
   verifyTopThree(player, &state);
-  // All non-treasure discarded cards shoudl be in Discard pile
-  verifyDiscard(&temphand, 0, &z, &state);
-}
+  printf("Verifying all non-treasure discarded cards are in Discard pile\n");
+  verifyDiscard(temphand, 0, &z, &state);
 
+  // Empty discard and check shuffle
+  printf("Setting deckCount to zero and verifying shuffle\n");
+  state.deckCount[player] = 0;
+  playAdventurer(&z, &drawntreasure, &player, temphand, &cardDrawn, &state);
+  // State and static state should be different
+  assert(!memcmp(&state.deck[player], &staticState.deck[player], staticState.deckCount[player] * sizeof(int)));
+}
 
 // Verifies the cards drawn by Adventurer are all treasure cards
 void verifyTopThree(int p, struct gameState *state) {
@@ -93,11 +96,8 @@ void verifyTopThree(int p, struct gameState *state) {
 }
 
 void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state) {
-  printf("Testing %d discarded cards.\n", state->discardCount[p]);
-  printDiscard(0, state);
   int flag = PASS;
   for (int i = 0; i < *z; i++) {
-    printf("\nCard %d\n", i);
     if (state->discard[p][i] != tempHand[i]) {
       flag = FAIL;
     }
@@ -113,4 +113,20 @@ void replaceCopperWith(int card, int p, struct gameState *state) {
       break;
     }
   }
+}
+
+void swap (int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void arrayShuffle(int arr[], int n) {
+    srand(time(NULL));
+    // Start from the last element and swap one by one. We don't
+    // need to run for the first element that's why i > 0
+    for (int i = n-1; i > 0; i--) {
+        int j = rand() % (i+1);
+        swap(&arr[i], &arr[j]);
+    }
 }

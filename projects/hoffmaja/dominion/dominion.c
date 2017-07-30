@@ -1257,7 +1257,7 @@ void playAdventurer(int *z, int *drawntreasure, int *currentPlayer, int *temphan
     }
 
     // Fixes bug for purposes of testing
-    discardCard(getHandPos(*currentPlayer, adventurer, state), *currentPlayer, state, 0);
+    // discardCard(getHandPos(*currentPlayer, adventurer, state), *currentPlayer, state, 0);
 }
 
 

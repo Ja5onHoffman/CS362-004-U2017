@@ -84,6 +84,23 @@ randomtestcard1: randomtestcard1.c dominion.o rngs.o interface.o
 randomtestcard2: randomtestcard2.c dominion.o rngs.o interface.o
 	gcc -o randomtestcard2 randomtestcard2.c dominion.o rngs.o interface.o -g $(CFLAGS)
 
+# Random test .out files
+
+randomtestadventurer.out: randomtestadventurer
+	./randomtestadventurer | sed -n '$$p'| &> randomtestadventurer.out
+	gcov -fcb dominion.c >> randomtestadventurer.out
+	cat dominion.c.gcov >> randomtestadventurer.out
+
+randomtestcard1.out: randomtestcard1
+	./randomtestcard1 &> randomtestcard1.out
+	gcov -fcb dominion.c >> randomtestcard1.out
+	cat dominion.c.gcov >> randomtestcard1.out
+
+randomtestcard2.out: randomtestcard2
+	./randomtestcard2 &> randomtestcard2.out
+	gcov -fcb dominion.c >> randomtestcard2.out
+	cat dominion.c.gcov >> randomtestcard2.out
+
 player: player.c interface.o
 		gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 

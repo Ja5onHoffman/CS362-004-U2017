@@ -20,18 +20,19 @@ void arrayShuffle(int arr[], int n);
 void testSmithy(int seed);
 
 int main() {
-  int numTests = 2000;
+  int numTests = 10000;
   // Test Salvager in loop
   SelectStream(0);
   PlantSeeds(9999);
 
   for (int i = 0; i < numTests; i++) {
+    printf("\n\nTest #%d\n", i);
     testSmithy(i);
   }
 
 
   // Need to multiply numtests by number of asserts
-  printf("RANDOM TEST: Smithy - Total failed tests: %d out of %d\n", errs, tests);
+  printf("RANDOM TEST: Smithy - Total failed asserts: %d out of %d\n", errs, tests);
   return 0;
 }
 
