@@ -87,7 +87,7 @@ randomtestcard2: randomtestcard2.c dominion.o rngs.o interface.o
 # Random test .out files
 
 randomtestadventurer.out: randomtestadventurer
-	./randomtestadventurer | sed -n '$$p'| &> randomtestadventurer.out
+	./randomtestadventurer &> randomtestadventurer.out
 	gcov -fcb dominion.c >> randomtestadventurer.out
 	cat dominion.c.gcov >> randomtestadventurer.out
 
