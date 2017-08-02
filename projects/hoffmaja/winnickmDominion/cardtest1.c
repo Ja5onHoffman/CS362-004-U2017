@@ -7,10 +7,13 @@
 #include "rngs.h"
 
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 void replaceCopperWith(int card, int p, struct gameState *state);
+// Added from my own dominion.c file
+int getHandPos(int p, int card, struct gameState *state);
 
 int main() {
   struct gameState state;
@@ -20,7 +23,7 @@ int main() {
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
   int handPos = -1;
-  int currentPlayer = 0;
+  // int currentPlayer = 0;   Not needed
   printf("\n----- CARD TEST ONE: Smithy Card -----\n\n");
 
   // Initialize game
@@ -38,7 +41,9 @@ int main() {
   printf("Player 1's hand count is now %d\n", oldCount);
   printf("Playing Smithy...\n");
   int hp = getHandPos(0, smithy, &state);
-  playSmithy(&currentPlayer, &hp, &state);
+  // Different args
+  // playSmithy(&currentPlayer, &hp, &state);
+  smithyEffect(&state, hp);
   printf("Drawing three cards...\n");
   printf("Player 1's hand count should now be %d (old count minus Smithy plus three).\n", oldCount + 2);
   printf("Hand count: %d\n", state.handCount[0]);
@@ -58,7 +63,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("CARD TEST 1 - Total failed tests: %d\n", errs);
+  printf("CARD TEST 1 - Total failed tests: %d of %d\n", errs, tests);
 
   return 0;
 }
@@ -71,4 +76,14 @@ void replaceCopperWith(int card, int p, struct gameState *state) {
       break;
     }
   }
+}
+
+int getHandPos(int p, int card, struct gameState *state) {
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == card) {
+      return i;
+    }
+  }
+
+  return -1;
 }
