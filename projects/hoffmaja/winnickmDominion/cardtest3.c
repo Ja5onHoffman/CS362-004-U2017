@@ -3,15 +3,18 @@
 #include <assert.h>
 #include <string.h>
 #include "dominion.h"
+#include "dominion_helpers.h" // For cardEffect
 #include "interface.h"
 #include "rngs.h"
 
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 void replaceCopperWith(int card, int p, struct gameState *state);
 void testPlayedCards(int card, struct gameState *state);
+int getHandPos(int p, int card, struct gameState *state);
 
 int main() {
   struct gameState state;
@@ -43,7 +46,10 @@ int main() {
 
   int buysBefore = state.numBuys;
   int coinsBefore = state.coins;
-  playSalvager(&currentPlayer, &salvagerPos, &adventurerPos, &state);
+  // playSalvager(&currentPlayer, &salvagerPos, &adventurerPos, &state);
+  int b = 0;
+  cardEffect(salvager, adventurer, 0, 0, &state, salvagerPos, &b);
+
   printf("Verifying buys increase by 1...\n");
   printf("Buys before playing Salvager: %d\n", buysBefore);
   printf("Buys after playing Salvager: %d\n", state.numBuys);
@@ -95,4 +101,14 @@ void testPlayedCards(int card, struct gameState *state) {
 
   printf("--FAILED TEST--\n");
   errs++;
+}
+
+int getHandPos(int p, int card, struct gameState *state) {
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == card) {
+      return i;
+    }
+  }
+
+  return -1;
 }
