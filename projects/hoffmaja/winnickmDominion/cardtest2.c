@@ -7,8 +7,9 @@
 #include "rngs.h"
 
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 void replaceCopperWith(int card, int p, struct gameState *state);
 void verifyTopThree(int p, struct gameState *state);
@@ -22,12 +23,15 @@ int main() {
   int seed = 9;
   int currentPlayer = 0;
 
+/*
+  Ass. 5: CardEffect variables contained int winnick's adventurer function
+*/
   // Additional variables from cardEffect
-  int temphand[MAX_HAND];// moved above the if statement
-  memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
-  int drawntreasure=0;
-  int cardDrawn;
-  int z = 0;
+  // int temphand[MAX_HAND]; // moved above the if statement
+  // memset(temphand, '\0', sizeof(temphand)); // Initialize to null for determining length
+  // int drawntreasure=0;
+  // int cardDrawn;
+  // int z = 0;
   printf("\n----- CARD TEST TWO: Adventurer Card -----\n\n");
 
   // Initialize game
@@ -39,26 +43,35 @@ int main() {
   printDeck(0, &state);
   printDiscard(0, &state);
   printf("Playing Adventurer...\n");
-  playAdventurer(&z, &drawntreasure, &currentPlayer, temphand, &cardDrawn, &state);
+  // playAdventurer(&z, &drawntreasure, &currentPlayer, temphand, &cardDrawn, &state);
+  int z = adventurerEffect(&state);
   printHand(0, &state);
   printDeck(0, &state);
   printDiscard(0, &state);
+
   printf("All drawn cards should be treasure cards. Testing...\n");
   verifyTopThree(0, &state);
 
-  for (int i = 0; i < MAX_HAND; i++) {
-    if (temphand[i] != '\0') {
-      z++;
-    }
-  }
+  // for (int i = 0; i < MAX_HAND; i++) {
+  //   if (temphand[i] != '\0') {
+  //     z++;
+  //   }
+  // }
 
   printf("All non-treasure discarded cards should \
   be in in Discard pile. Testing...\n");
-  verifyDiscard(&temphand, 0, &z, &state);
+  // verifyDiscard(&temphand, 0, &z, &state);
 
+  printf("Testing %d discarded cards.\n", state.discardCount[0]);
+  printDiscard(0, &state);
+  // for (int i = 0; i < z; i++) {
+  //   printf("\nCard %d\n", i);
+  // }
+  // This will be estate at beginning of game
+  assert(state.discard[0][0] == estate);
 
   printf("\n\n\n");
-  printf("CARD TEST 2 - Total failed tests: %d\n", errs);
+  printf("CARD TEST 2 - Total failed tests: %d of %d\n", errs, tests);
 
   return 0;
 }
@@ -89,9 +102,11 @@ void verifyTopThree(int p, struct gameState *state) {
   if (flag) {
     printf("FAILED TEST: Card other than trasure drawn.\n");
     errs++;
+    tests++;
     printHand(0, state);
   } else {
     printf("PASSED TEST: All treasure cards drawn.\n");
+    tests++;
     printHand(0, state);
   }
 }
