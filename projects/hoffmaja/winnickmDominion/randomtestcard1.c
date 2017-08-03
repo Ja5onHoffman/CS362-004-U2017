@@ -18,6 +18,7 @@ void replaceCopperWith(int card, int p, struct gameState *state);
 void testPlayedCards(int card, struct gameState *state);
 void arrayShuffle(int arr[], int n);
 void testSalvager(int seed);
+int getHandPos(int p, int card, struct gameState *state);
 
 int main() {
   int numTests = 10000;
@@ -75,8 +76,9 @@ void testSalvager(int seed) {
   printf("Salvager added to player %d's hand. Playing...\n", player);
   int buysBefore = state.numBuys;
   int coinsBefore = state.coins;
-  playSalvager(&player, &salvagerPos, &randPos, &state);
-
+  // playSalvager(&player, &salvagerPos, &randPos, &state);
+  int b = 0;
+  cardEffect(salvager, adventurer, 0, 0, &state, salvagerPos, &b);
   printf("Assert buys increase after playing Salvager card\n");
   assert(state.numBuys > buysBefore);
   printf("Assert coins gained equal to discarded card\n");
@@ -87,6 +89,7 @@ void testSalvager(int seed) {
   assert(state.playedCardCount == 1);
   printf("Assert salvager is no longer in player hand\n");
   assert(state.hand[player][randPos] != randCard);
+
 }
 
 void swap (int *a, int *b) {
@@ -113,4 +116,14 @@ void replaceCopperWith(int card, int p, struct gameState *state) {
       break;
     }
   }
+}
+
+int getHandPos(int p, int card, struct gameState *state) {
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == card) {
+      return i;
+    }
+  }
+
+  return -1;
 }

@@ -18,6 +18,7 @@ void replaceCopperWith(int card, int p, struct gameState *state);
 void testPlayedCards(int card, struct gameState *state);
 void arrayShuffle(int arr[], int n);
 void testSmithy(int seed);
+int getHandPos(int p, int card, struct gameState *state);
 
 int main() {
   int numTests = 10000;
@@ -59,7 +60,8 @@ void testSmithy(int seed) {
   int oldCount = state.handCount[player];
   handPos = getHandPos(player, smithy, &state);
   // Play smithy
-  playSmithy(&player, &handPos, &state);
+  // playSmithy(&player, &handPos, &state);
+  smithyEffect(&state, handPos);
   // Assert three cards drawn
   printf("Assert three cards were drawn by player %d\n", player);
   assert(state.handCount[player] == oldCount + 2);
@@ -77,4 +79,14 @@ void testSmithy(int seed) {
     }
   }
 
+}
+
+int getHandPos(int p, int card, struct gameState *state) {
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == card) {
+      return i;
+    }
+  }
+
+  return -1;
 }
