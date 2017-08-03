@@ -8,12 +8,14 @@
 #include "rngs.h"
 
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 void replaceCopperWith(int card, int p, struct gameState *state);
 void verifyTopThree(int p, struct gameState *state);
 void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state);
+int getHandPos(int p, int card, struct gameState *state);
 void addFiveToDeck(int p, struct gameState *state);
 
 int main() {
@@ -42,7 +44,7 @@ int main() {
   printf("Adding Council Room to hand...\n");
   replaceCopperWith(council_room, 0, &state);
   printHand(0, &state);
-  int cp = getHandPos(0, council_room, &state);
+  int hp = getHandPos(0, council_room, &state);
   int oldCount = state.handCount[0];
   int oldBuys = state.numBuys;
 
@@ -50,12 +52,12 @@ int main() {
   int oldCount2 = state.handCount[1];
 
   printf("Playing Council Room...\n");
-  playCouncilRoom(&currentPlayer, &cp, &state);
-
+  // playCouncilRoom(&currentPlayer, &cp, &state);
+  councilRoomEffect(&state, hp);
   printf("\nVerifying four cards drawn by current player...\n");
   printf("Prevous hand count: %d\n", oldCount);
   printf("New hand count (minus played Council Room): %d\n", state.handCount[0]);
-  assert(state.handCount[0] == oldCount + 3);
+  assert(state.handCount[0] == oldCount + 4);
 
   printf("\nVerifying number of buys increased by one...\n");
   printf("Previous buys: %d\n", oldBuys);
@@ -69,7 +71,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("CARD TEST 4 - Total failed tests: %d\n", errs);
+  printf("CARD TEST 4 - Total failed tests: %d of %d\n", errs, tests);
 
   return 0;
 }
@@ -94,4 +96,14 @@ void addFiveToDeck(int p, struct gameState *state) {
     state->deck[p][state->deckCount[p]] = gold;
     state->deckCount[p]++;
   }
+}
+
+int getHandPos(int p, int card, struct gameState *state) {
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == card) {
+      return i;
+    }
+  }
+
+  return -1;
 }

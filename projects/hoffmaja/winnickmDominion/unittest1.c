@@ -10,9 +10,10 @@
 Unit test for whoseTurn function.
 *********/
 
-int fail = 1;
+int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("FAILED TEST\n"); fail--; }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 int main() {
   struct gameState state;
@@ -35,6 +36,6 @@ int main() {
     assert(whoseTurn(&state) == numPlayers[i]);
   }
 
-  printf("\nUNIT TEST 1: %d failed tests.\n", abs(fail-1));
+  printf("\nUNIT TEST 1: %d failed tests out of %d\n", errs, tests);
   return 0;
 }

@@ -74,7 +74,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("CARD TEST 3 - Total failed tests: %d\n", errs);
+  printf("CARD TEST 3 - Total failed tests: %d of %d\n", errs, tests);
 
   return 0;
 }

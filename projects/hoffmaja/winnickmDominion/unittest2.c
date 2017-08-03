@@ -13,9 +13,11 @@ Unit test for gainCard function.
 
 
 *********/
+
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 int main() {
   struct gameState state;
@@ -122,7 +124,7 @@ int main() {
   assert(err == -1);
 
   printf("\n\n\n");
-  printf("UNIT TEST 2 - Total failed tests: %d\n\n", errs);
+  printf("UNIT TEST 2 - Total failed tests: %d out of %d\n\n", errs, tests);
 
   return 0;
 }

@@ -12,8 +12,9 @@ Unit test for scoreFor function.
 *********/
 
 int errs = 0;
+int tests = 0;
 #undef assert
-#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; } else { printf("**PASS**\n"); }}
+#define assert(cond) { if (!(cond)) { printf("--FAILED TEST--\n"); errs++; tests++; } else { printf("**PASS**\n"); tests++; }}
 
 void addToDeck(int p, int card, struct gameState* state);
 void addToDiscard(int p, int card, struct gameState* state);
@@ -72,7 +73,7 @@ int main() {
 
 
   printf("\n\n\n");
-  printf("UNIT TEST 4 - Total failed tests: %d of 5\n\n", errs);
+  printf("UNIT TEST 4 - Total failed tests: %d of %d\n\n", errs, tests);
 
 
   return 0;
