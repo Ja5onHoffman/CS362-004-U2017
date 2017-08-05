@@ -65,7 +65,7 @@ void testSalvager(int seed) {
   // Add random card to hand
   int c = floor(Random() * 10);
   int randCard = k[c];
-  int cost = getCost(randCard);
+  // int cost = getCost(randCard);
   addCardToHand(player, randCard, &state);
   // Add salvager to hand
   addCardToHand(player, salvager, &state);

@@ -22,7 +22,7 @@ int main() {
   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
-  int currentPlayer = 0;
+  // int currentPlayer = 0;
 
   // Additional variables from cardEffect
   int temphand[MAX_HAND];// moved above the if statement

@@ -47,6 +47,7 @@ int main() {
   printf("Drawing three cards...\n");
   printf("Player 1's hand count should now be %d (old count minus Smithy plus three).\n", oldCount + 2);
   printf("Hand count: %d\n", state.handCount[0]);
+  printHand(0, &state);
   assert(state.handCount[0] == oldCount + 2);
 
   printf("Player 2 state should be unchanged.\n");

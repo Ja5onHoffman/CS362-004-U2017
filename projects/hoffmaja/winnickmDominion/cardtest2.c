@@ -21,7 +21,7 @@ int main() {
   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
     sea_hag, tribute, smithy, council_room};
   int seed = 9;
-  int currentPlayer = 0;
+  // int currentPlayer = 0;
 
 /*
   Ass. 5: CardEffect variables contained int winnick's adventurer function
@@ -91,7 +91,7 @@ void verifyTopThree(int p, struct gameState *state) {
   int cards[3] = { 0 }; // init to 0s
   int c = 0, flag = 0; // index for cards
   int i = state->handCount[p] - 1;
-  for (i; i >= state->handCount[p] - 3; i--) {
+  for (; i >= state->handCount[p] - 3; i--) {
     if (state->hand[p][i] != copper && state->hand[p][i] != silver && state->hand[p][i] != gold) {
       flag = 1;
       cards[c] = state->hand[p][i];
