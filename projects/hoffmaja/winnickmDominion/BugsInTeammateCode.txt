@@ -1,0 +1,40 @@
+
+
+* BUGS IN TEAMMATE CODE *
+
+-- Smithy draws too many cards --
+
+One bug revealed by my tests is that my partner’s *smithyEffect function draws too many cards.
+Smithy should add three cards to the player’s deck, however, the function is drawing four.
+This bug was likely introduced per the Assignment 2 instructions, as it doesn’t exist in the
+original code.
+
+The bug can be seen on line 1,257 in *dominion.c.
+
+
+
+In a running program, this bug would cause considerable disruption to the game, as
+every Smithy that’s played would either result in an unfair advantage or disadvantage
+to its player, depending on the cards drawn.
+
+To reproduce the error in a test environment, simply add Smithy to a player’s hand
+and call the *smithyEffect function. The deck can be examined before and after function
+call, revealing that too many cards have been added.
+
+
+
+-- Adventurer doesn’t discard itself --
+
+Playing the Adventurer card using the *adventurerEffect function should cause the card
+to be removed from the player’s hand. This was made evident by inspecting the player’s
+hand printed onscreen, however, not part of my original test, as I had updated the function
+in my own code for Assignment 2. The test now shows a failed assertion when Adventurer
+remains in the player’s hand after being played.
+
+The *adventurerEffect function ends on line 1,250 in *dominion.c, where the error is evident
+by comparing the function to the other refactored card functions. While the others discard
+the played card as a final action, *discardCard is missing from the end of *adventurerEffect.
+
+A reproduction of the error can be accomplished by adding Adventurer to a player’s hand and
+playing the card. Examining the player’s hand after calling *adventurerEffect will reveal
+that the card has not been discarded.
