@@ -1,23 +1,24 @@
 #include "dominion.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "rngs.h"
 
 int main (int argc, char** argv) {
 
   struct gameState G;
-  
+
   int i;
 
   int start = -1;
 
-  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, 
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
 	       sea_hag, tribute, smithy};
-  
+
   memset(&G, 'z', sizeof(struct gameState));
-  
+
   initializeGame(4, k, atoi(argv[1]), &G);
-  
+
   printf ("Rough guide to locations in structure:\n");
   printf ("0: numPlayers\n");
   printf ("%ld: supplyCount[0]\n", ((long)&(G.supplyCount[0]))-((long)&G));
