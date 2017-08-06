@@ -14,6 +14,7 @@ int tests = 0;
 void replaceCopperWith(int card, int p, struct gameState *state);
 void verifyTopThree(int p, struct gameState *state);
 void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state);
+void checkForAdv(int p, struct gameState *state);
 
 int main() {
   struct gameState state;
@@ -37,7 +38,7 @@ int main() {
   // Initialize game
   initializeGame(numPlayers, k, seed, &state);
 
-  printf("Adding Adventurer to Player 1 hand...\n");
+  printf("Adding Adventurer to Player 0 hand...\n");
   replaceCopperWith(adventurer, 0, &state);
   printHand(0, &state);
   printDeck(0, &state);
@@ -69,6 +70,11 @@ int main() {
   // }
   // This will be estate at beginning of game
   assert(state.discard[0][0] == estate);
+
+
+  printf("Adventurer should be discarded from hand\n");
+  printHand(0, &state);
+  checkForAdv(0, &state);
 
   printf("\n\n\n");
   printf("CARD TEST 2 - Total failed tests: %d of %d\n", errs, tests);
@@ -118,4 +124,14 @@ void verifyDiscard(int *tempHand, int p, int *z, struct gameState *state) {
     printf("\nCard %d\n", i);
     assert(state->discard[p][i] == tempHand[i]);
   }
+}
+
+void checkForAdv(int p, struct gameState *state) {
+  int flag = 1;
+  for (int i = 0; i <= state->handCount[p]; i++) {
+    if (state->hand[p][i] == adventurer) {
+      flag = 0;
+    }
+  }
+  assert(flag);
 }
